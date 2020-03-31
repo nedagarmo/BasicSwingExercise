@@ -5,17 +5,30 @@
  */
 package com.unir.plataformasnetbeans.forms;
 
+import com.unir.plataformasnetbeans.business.Pedido;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author nedagarmo
  */
-public class Principal extends javax.swing.JPanel {
-
+public class Principal extends javax.swing.JFrame {
+    private final Pedido pedido;
+    private final Resumen frmResumen;
     /**
      * Creates new form Principal
      */
     public Principal() {
         initComponents();
+        
+        // Se agregan los radiobuttons al buttongroup para validar que el usuario elija una sola opción
+        btnGroupDistribuidor.add(rbtCemefar);
+        btnGroupDistribuidor.add(rbtCofarma);
+        btnGroupDistribuidor.add(rbtEmpsephar);
+        
+        this.pedido = new Pedido();
+        this.frmResumen = new Resumen();
     }
 
     /**
@@ -28,31 +41,47 @@ public class Principal extends javax.swing.JPanel {
     private void initComponents() {
 
         btnGroupDistribuidor = new javax.swing.ButtonGroup();
-        jLabel1 = new javax.swing.JLabel();
-        txtNombreMedicamento = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        pnlContenedor = new javax.swing.JPanel();
+        lblTipoMedicamento = new javax.swing.JLabel();
+        btnBorrar = new javax.swing.JButton();
         cboTipoMedicamento = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
+        btnConfirmar = new javax.swing.JButton();
+        lblCantidad = new javax.swing.JLabel();
         txtCantidad = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        lblDistribuidor = new javax.swing.JLabel();
         rbtCofarma = new javax.swing.JRadioButton();
         rbtEmpsephar = new javax.swing.JRadioButton();
         rbtCemefar = new javax.swing.JRadioButton();
-        jLabel5 = new javax.swing.JLabel();
+        lblSucursal = new javax.swing.JLabel();
+        lblNombreMedicamento = new javax.swing.JLabel();
         chkPrincipal = new javax.swing.JCheckBox();
-        hckSecundaria = new javax.swing.JCheckBox();
-        btnBorrar = new javax.swing.JButton();
-        btnConfirmar = new javax.swing.JButton();
+        txtNombreMedicamento = new javax.swing.JTextField();
+        chkSecundaria = new javax.swing.JCheckBox();
 
-        jLabel1.setText("Nombre del medicamento");
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Sistema de Pedidos de Medicamentos");
 
-        jLabel2.setText("Tipo de medicamento");
+        lblTipoMedicamento.setText("Tipo de medicamento");
+
+        btnBorrar.setText("Borrar");
+        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarActionPerformed(evt);
+            }
+        });
 
         cboTipoMedicamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Analgésico", "Analéptico", "Anestésico", "Antiácido", "Antidepresivo", "Antibióticos" }));
 
-        jLabel3.setText("Cantidad");
+        btnConfirmar.setText("Confirmar");
+        btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmarActionPerformed(evt);
+            }
+        });
 
-        jLabel4.setText("Distribuidor");
+        lblCantidad.setText("Cantidad");
+
+        lblDistribuidor.setText("Distribuidor");
 
         rbtCofarma.setText("Cofarma");
 
@@ -60,87 +89,163 @@ public class Principal extends javax.swing.JPanel {
 
         rbtCemefar.setText("Cemefar");
 
-        jLabel5.setText("Sucursal");
+        lblSucursal.setText("Sucursal");
+
+        lblNombreMedicamento.setText("Nombre del medicamento");
 
         chkPrincipal.setText("Principal");
 
-        hckSecundaria.setText("Secundaria");
+        chkSecundaria.setText("Secundaria");
 
-        btnBorrar.setText("Borrar");
-
-        btnConfirmar.setText("Confirmar");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlContenedorLayout = new javax.swing.GroupLayout(pnlContenedor);
+        pnlContenedor.setLayout(pnlContenedorLayout);
+        pnlContenedorLayout.setHorizontalGroup(
+            pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlContenedorLayout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+                .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblNombreMedicamento)
+                    .addComponent(lblTipoMedicamento)
+                    .addComponent(lblCantidad)
+                    .addComponent(lblDistribuidor)
+                    .addComponent(lblSucursal))
                 .addGap(18, 18, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtNombreMedicamento)
                     .addComponent(cboTipoMedicamento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtCantidad)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlContenedorLayout.createSequentialGroup()
+                        .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(rbtCofarma)
                             .addComponent(chkPrincipal))
                         .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(hckSecundaria)
-                            .addGroup(layout.createSequentialGroup()
+                        .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(chkSecundaria)
+                            .addGroup(pnlContenedorLayout.createSequentialGroup()
                                 .addComponent(rbtEmpsephar)
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(rbtCemefar)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlContenedorLayout.createSequentialGroup()
                                         .addGap(0, 10, Short.MAX_VALUE)
                                         .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(btnConfirmar)
                                         .addGap(6, 6, 6)))))))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        pnlContenedorLayout.setVerticalGroup(
+            pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlContenedorLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNombreMedicamento)
                     .addComponent(txtNombreMedicamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTipoMedicamento)
                     .addComponent(cboTipoMedicamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
+                .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCantidad)
                     .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
+                .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDistribuidor)
                     .addComponent(rbtCofarma)
                     .addComponent(rbtEmpsephar)
                     .addComponent(rbtCemefar))
                 .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
+                .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSucursal)
                     .addComponent(chkPrincipal)
-                    .addComponent(hckSecundaria))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(chkSecundaria))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
+                .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(64, 64, 64))
         );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnlContenedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnlContenedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+        // TODO add your handling code here:
+        this.limpiarControles();
+    }//GEN-LAST:event_btnBorrarActionPerformed
+
+    private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
+        // TODO add your handling code here:
+        String resultado;
+        resultado = this.pedido.validar(txtNombreMedicamento.getText(), cboTipoMedicamento.getSelectedItem().toString(), 
+                txtCantidad.getText(), btnGroupDistribuidor.getSelection().toString(),
+                chkPrincipal.isSelected(), chkSecundaria.isSelected());
+        if(resultado.equals("success"))
+        {
+            this.limpiarControles();
+            this.frmResumen.setPedido(pedido);
+            this.frmResumen.setAlwaysOnTop(true);
+            this.frmResumen.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, resultado);
+        }
+    }//GEN-LAST:event_btnConfirmarActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Principal().setVisible(true);
+            }
+        });
+    }
+    
+    private void limpiarControles(){
+        txtNombreMedicamento.setText("");
+        cboTipoMedicamento.setSelectedIndex(0);
+        txtCantidad.setText("");
+        btnGroupDistribuidor.clearSelection();
+        chkPrincipal.setSelected(false);
+        chkSecundaria.setSelected(false);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBorrar;
@@ -148,12 +253,13 @@ public class Principal extends javax.swing.JPanel {
     private javax.swing.ButtonGroup btnGroupDistribuidor;
     private javax.swing.JComboBox<String> cboTipoMedicamento;
     private javax.swing.JCheckBox chkPrincipal;
-    private javax.swing.JCheckBox hckSecundaria;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JCheckBox chkSecundaria;
+    private javax.swing.JLabel lblCantidad;
+    private javax.swing.JLabel lblDistribuidor;
+    private javax.swing.JLabel lblNombreMedicamento;
+    private javax.swing.JLabel lblSucursal;
+    private javax.swing.JLabel lblTipoMedicamento;
+    private javax.swing.JPanel pnlContenedor;
     private javax.swing.JRadioButton rbtCemefar;
     private javax.swing.JRadioButton rbtCofarma;
     private javax.swing.JRadioButton rbtEmpsephar;
