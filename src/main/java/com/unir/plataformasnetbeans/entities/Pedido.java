@@ -3,21 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.unir.plataformasnetbeans.business;
+package com.unir.plataformasnetbeans.entities;
 
 /**
  *
  * @author nedagarmo
  */
 public class Pedido {
-    
+
     private String nombre;
     private String tipo;
     private int cantidad;
     private String distribuidor;
     private boolean isSucursalPrincipal;
     private boolean isSucursalSecundaria;
-    
+
     /**
      * @return the nombre
      */
@@ -64,15 +64,30 @@ public class Pedido {
             boolean isSucursalPrincipal, boolean isSucursalSecundaria) {
         String resultado = "success";
 
-        this.nombre = nombre;
-        this.tipo = tipo;
-
-        try {
-            this.cantidad = Integer.parseInt(cantidad);
-        } catch (Exception e) {
-            return "La cantidad debe ser un valor numérico";
+        if (nombre.trim().equals("")) {
+            resultado += "- Se debe proporcionar un nombre de medicamento \n\r";
         }
 
+        if (tipo.trim().equals("")) {
+            resultado += "- Debe elegir un tipo de medicamento \n\r";
+        }
+
+        try {
+            this.cantidad = Integer.parseUnsignedInt(cantidad);
+        } catch (Exception e) {
+            resultado += "- La cantidad debe ser un valor numérico positivo \n\r";
+        }
+
+        if (distribuidor.trim().equals("")) {
+            resultado += "- Debe elegir un distribuidor \n\r";
+        }
+
+        if (!isSucursalPrincipal && !isSucursalSecundaria) {
+            resultado += "- Debe elegir almenos una sucursal \n\r";
+        }
+
+        this.nombre = nombre;
+        this.tipo = tipo;
         this.distribuidor = distribuidor;
         this.isSucursalPrincipal = isSucursalPrincipal;
         this.isSucursalSecundaria = isSucursalSecundaria;

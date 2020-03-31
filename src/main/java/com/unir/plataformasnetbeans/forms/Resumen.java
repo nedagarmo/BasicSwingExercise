@@ -5,7 +5,7 @@
  */
 package com.unir.plataformasnetbeans.forms;
 
-import com.unir.plataformasnetbeans.business.Pedido;
+import com.unir.plataformasnetbeans.entities.Pedido;
 import javax.swing.JFrame;
 
 /**
@@ -15,7 +15,7 @@ import javax.swing.JFrame;
 public class Resumen extends javax.swing.JFrame {
     
     private Pedido pedido;
-    
+
     /**
      * @param pedido the pedido to set
      */
@@ -23,16 +23,16 @@ public class Resumen extends javax.swing.JFrame {
         this.pedido = pedido;
         
         this.setTitle("Pedido al distribuidor " + pedido.getDistribuidor());
-        this.lblMedicamentoPedido.setText(pedido.getCantidad() + " unidades del "+ pedido.getTipo() + " " + pedido.getNombre());
-        if(pedido.isIsSucursalPrincipal() && pedido.isIsSucursalSecundaria()) {
+        this.lblMedicamentoPedido.setText(pedido.getCantidad() + " unidades del " + pedido.getTipo() + " " + pedido.getNombre());
+        if (pedido.isIsSucursalPrincipal() && pedido.isIsSucursalSecundaria()) {
             lblDireccionFarmacia.setText("Para la farmacia situada en Calle de la Rosa n. 28 y para la situada en Calle Alcazabilla n. 3");
-        } else if(pedido.isIsSucursalPrincipal()) {
+        } else if (pedido.isIsSucursalPrincipal()) {
             lblDireccionFarmacia.setText("Para la farmacia situada en Calle de la Rosa n. 28");
         } else {
             lblDireccionFarmacia.setText("Para la farmacia situada en Calle Alcazabilla n. 3");
         }
     }
-    
+
     /**
      * Creates new form Resumen
      */

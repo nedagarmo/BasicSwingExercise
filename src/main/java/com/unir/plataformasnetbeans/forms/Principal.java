@@ -5,7 +5,7 @@
  */
 package com.unir.plataformasnetbeans.forms;
 
-import com.unir.plataformasnetbeans.business.Pedido;
+import com.unir.plataformasnetbeans.entities.Pedido;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
@@ -14,19 +14,21 @@ import javax.swing.JOptionPane;
  * @author nedagarmo
  */
 public class Principal extends javax.swing.JFrame {
+
     private final Pedido pedido;
     private final Resumen frmResumen;
+
     /**
      * Creates new form Principal
      */
     public Principal() {
         initComponents();
-        
+
         // Se agregan los radiobuttons al buttongroup para validar que el usuario elija una sola opción
         btnGroupDistribuidor.add(rbtCemefar);
         btnGroupDistribuidor.add(rbtCofarma);
         btnGroupDistribuidor.add(rbtEmpsephar);
-        
+
         this.pedido = new Pedido();
         this.frmResumen = new Resumen();
     }
@@ -189,11 +191,10 @@ public class Principal extends javax.swing.JFrame {
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         // TODO add your handling code here:
         String resultado;
-        resultado = this.pedido.validar(txtNombreMedicamento.getText(), cboTipoMedicamento.getSelectedItem().toString(), 
-                txtCantidad.getText(), btnGroupDistribuidor.getSelection().toString(),
+        resultado = this.pedido.validar(txtNombreMedicamento.getText(), String.valueOf(cboTipoMedicamento.getSelectedItem()),
+                txtCantidad.getText(), btnGroupDistribuidor.getSelection().getActionCommand(),
                 chkPrincipal.isSelected(), chkSecundaria.isSelected());
-        if(resultado.equals("success"))
-        {
+        if (resultado.equals("success")) {
             this.limpiarControles();
             this.frmResumen.setPedido(pedido);
             this.frmResumen.setAlwaysOnTop(true);
@@ -237,8 +238,8 @@ public class Principal extends javax.swing.JFrame {
             }
         });
     }
-    
-    private void limpiarControles(){
+
+    private void limpiarControles() {
         txtNombreMedicamento.setText("");
         cboTipoMedicamento.setSelectedIndex(0);
         txtCantidad.setText("");
