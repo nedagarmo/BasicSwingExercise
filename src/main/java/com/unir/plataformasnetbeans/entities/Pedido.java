@@ -5,6 +5,8 @@
  */
 package com.unir.plataformasnetbeans.entities;
 
+import com.unir.plataformasnetbeans.utils.StringsManager;
+
 /**
  *
  * @author nedagarmo
@@ -62,28 +64,28 @@ public class Pedido {
 
     public String validar(String nombre, String tipo, String cantidad, String distribuidor,
             boolean isSucursalPrincipal, boolean isSucursalSecundaria) {
-        String resultado = "success";
+        String errores = "";
 
-        if (nombre.trim().equals("")) {
-            resultado += "- Se debe proporcionar un nombre de medicamento \n\r";
+        if (nombre.trim().equals("") || !StringsManager.isAlphanumeric(nombre)) {
+            errores += "- Se debe proporcionar un nombre de medicamento alfanumérico \n\r";
         }
 
         if (tipo.trim().equals("")) {
-            resultado += "- Debe elegir un tipo de medicamento \n\r";
+            errores += "- Debe elegir un tipo de medicamento \n\r";
         }
 
         try {
             this.cantidad = Integer.parseUnsignedInt(cantidad);
-        } catch (Exception e) {
-            resultado += "- La cantidad debe ser un valor numérico positivo \n\r";
+        } catch (NumberFormatException e) {
+            errores += "- La cantidad debe ser un valor numérico positivo \n\r";
         }
 
         if (distribuidor.trim().equals("")) {
-            resultado += "- Debe elegir un distribuidor \n\r";
+            errores += "- Debe elegir un distribuidor \n\r";
         }
 
         if (!isSucursalPrincipal && !isSucursalSecundaria) {
-            resultado += "- Debe elegir almenos una sucursal \n\r";
+            errores += "- Debe elegir almenos una sucursal \n\r";
         }
 
         this.nombre = nombre;
@@ -92,6 +94,6 @@ public class Pedido {
         this.isSucursalPrincipal = isSucursalPrincipal;
         this.isSucursalSecundaria = isSucursalSecundaria;
 
-        return resultado;
+        return errores.equals("") ? "success" : errores;
     }
 }

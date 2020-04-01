@@ -123,13 +123,13 @@ public class Resumen extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        this.setVisible(false);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
         // TODO add your handling code here:
         System.out.println("Pedido enviado");
-        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        this.setVisible(false);
     }//GEN-LAST:event_btnEnviarActionPerformed
 
 

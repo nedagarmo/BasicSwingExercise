@@ -6,6 +6,8 @@
 package com.unir.plataformasnetbeans.forms;
 
 import com.unir.plataformasnetbeans.entities.Pedido;
+import com.unir.plataformasnetbeans.utils.ButtonGroupManager;
+import java.awt.HeadlessException;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
@@ -190,17 +192,21 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         // TODO add your handling code here:
-        String resultado;
-        resultado = this.pedido.validar(txtNombreMedicamento.getText(), String.valueOf(cboTipoMedicamento.getSelectedItem()),
-                txtCantidad.getText(), btnGroupDistribuidor.getSelection().getActionCommand(),
-                chkPrincipal.isSelected(), chkSecundaria.isSelected());
-        if (resultado.equals("success")) {
-            this.limpiarControles();
-            this.frmResumen.setPedido(pedido);
-            this.frmResumen.setAlwaysOnTop(true);
-            this.frmResumen.setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(this, resultado);
+        try {
+            String resultado;
+            resultado = this.pedido.validar(txtNombreMedicamento.getText(), String.valueOf(cboTipoMedicamento.getSelectedItem()),
+                    txtCantidad.getText(), ButtonGroupManager.getSelectedButtonText(btnGroupDistribuidor),
+                    chkPrincipal.isSelected(), chkSecundaria.isSelected());
+            if (resultado.equals("success")) {
+                this.limpiarControles();
+                this.frmResumen.setPedido(pedido);
+                this.frmResumen.setAlwaysOnTop(true);
+                this.frmResumen.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, resultado);
+            }
+        } catch (HeadlessException | SecurityException ex) {
+            JOptionPane.showConfirmDialog(this, "Ha ocurrido un error: " + ex);
         }
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
